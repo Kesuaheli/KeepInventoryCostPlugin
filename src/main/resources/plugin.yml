@@ -1,0 +1,10 @@
+name: KeepInventoryCost
+version: '${project.version}'
+main: de.kesuaheli.keepinventorycost.KeepInventoryCost
+api-version: "1.20"
+author: Kesuaheli
+
+commands:
+  keepinventory:
+    usage: "/keepinventory get - view
+    /keepinventory set <true|false> - update"
