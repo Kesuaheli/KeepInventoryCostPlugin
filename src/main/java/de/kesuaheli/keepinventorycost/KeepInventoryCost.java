@@ -6,6 +6,10 @@ import de.kesuaheli.keepinventorycost.commands.KeepInventoryCommand;
 import de.kesuaheli.keepinventorycost.commands.KeepInventoryTab;
 import de.kesuaheli.keepinventorycost.events.PlayerDeathEvent;
 import de.kesuaheli.keepinventorycost.files.PlayersConfig;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +22,11 @@ public final class KeepInventoryCost extends JavaPlugin {
 
     public Economy eco;
     public final Logger logger = getLogger();
+
+    private final TextComponent LOG_PREFIX = Component.empty()
+            .append(Component.text("["))
+            .append(Component.text("KeepInv", NamedTextColor.DARK_PURPLE))
+            .append(Component.text("] "));
 
     public PlayersConfig pConf;
 
@@ -55,5 +64,13 @@ public final class KeepInventoryCost extends JavaPlugin {
         }
         this.eco = economyProvider.getProvider();
         return true;
+    }
+
+    public void sendMessage(Audience receiver, String message) {
+        sendMessage(receiver, Component.text(message));
+    }
+
+    public void sendMessage(Audience receiver, Component component) {
+        receiver.sendMessage(LOG_PREFIX.append(component));
     }
 }

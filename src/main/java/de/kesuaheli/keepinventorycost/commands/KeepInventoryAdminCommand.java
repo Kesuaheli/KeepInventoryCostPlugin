@@ -1,6 +1,8 @@
 package de.kesuaheli.keepinventorycost.commands;
 
 import de.kesuaheli.keepinventorycost.KeepInventoryCost;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,10 +25,10 @@ public class KeepInventoryAdminCommand implements CommandExecutor {
         switch (arg[0]) {
         case "reload":
             this.plugin.reloadConfig();
-            sender.sendMessage("Successfully reloaded config!");
+            this.plugin.sendMessage(sender, Component.text("Successfully reloaded config!",NamedTextColor.GREEN));
             return true;
         case "config":
-            sender.sendMessage("Coming soon...");
+            this.plugin.sendMessage(sender, "Coming soon...");
             return true;
         }
         return false;

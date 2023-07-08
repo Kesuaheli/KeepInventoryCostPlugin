@@ -1,6 +1,9 @@
 package de.kesuaheli.keepinventorycost.commands;
 
 import de.kesuaheli.keepinventorycost.KeepInventoryCost;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +20,7 @@ public class KeepInventoryCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] arg) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can execute this command!");
+            this.plugin.sendMessage(sender, Component.text("Only players can execute this command!", NamedTextColor.RED));
             return true;
         }
         Player player = (Player) sender;
@@ -28,23 +31,37 @@ public class KeepInventoryCommand implements CommandExecutor {
         }
 
         boolean enabled = this.plugin.pConf.getConfig().getBoolean(player.getUniqueId() + ".enabled", false);
+        String msg;
+        TextComponent state;
 
         switch (arg[0]) {
         case "get":
-            player.sendMessage("Your setting is set to " + enabled);
+            msg = this.plugin.getConfig().getString("message.setting.get", "MISSING TEXT");
+            state = enabled ?
+                    Component.text(this.plugin.getConfig().getString("message.enabled", "TRUE"), NamedTextColor.GREEN):
+                    Component.text(this.plugin.getConfig().getString("message.disabled", "FALSE"), NamedTextColor.RED);
+
+            this.plugin.sendMessage(sender, Component.translatable(msg).args(state));
+
             return true;
         case "set":
             if (!arg[1].equals("true") && !arg[1].equals("false")) {
                 return false;
             }
+
             boolean enable = arg[1].equals("true");
-            if (enable == enabled) {
-                player.sendMessage("Your setting is already set to " + enable);
-                return true;
+            state = enable ?
+                    Component.text(this.plugin.getConfig().getString("message.enabled", "TRUE"), NamedTextColor.GREEN):
+                    Component.text(this.plugin.getConfig().getString("message.disabled", "FALSE"), NamedTextColor.RED);
+
+            if (enable != enabled) {
+                this.plugin.pConf.getConfig().set(player.getUniqueId() + ".enabled", enable);
+                this.plugin.pConf.saveConfig();
+                msg = this.plugin.getConfig().getString("message.setting.set", "MISSING TEXT");
+            } else {
+                msg = this.plugin.getConfig().getString("message.setting.set_refuse", "MISSING TEXT");
             }
-            this.plugin.pConf.getConfig().set(player.getUniqueId() + ".enabled", enable);
-            this.plugin.pConf.saveConfig();
-            player.sendMessage("Your setting was updated to " + enable);
+            this.plugin.sendMessage(player, Component.translatable(msg).args(state));
             return true;
         }
         return false;

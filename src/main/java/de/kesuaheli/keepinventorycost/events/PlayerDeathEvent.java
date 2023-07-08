@@ -1,6 +1,7 @@
 package de.kesuaheli.keepinventorycost.events;
 
 import de.kesuaheli.keepinventorycost.KeepInventoryCost;
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -20,10 +21,15 @@ public class PlayerDeathEvent implements Listener {
         }
 
         int cost = this.plugin.getConfig().getInt("cost", 0);
+        Component costText = Component.text(cost)
+                .appendSpace()
+                .append(Component.text(cost == 1? this.plugin.eco.currencyNameSingular():this.plugin.eco.currencyNamePlural()));
         if (cost >= 0 &&
                 (this.plugin.eco.getBalance(event.getPlayer()) < cost ||
                 !this.plugin.eco.withdrawPlayer(event.getPlayer(), cost).transactionSuccess())) {
-            event.getPlayer().sendMessage("You didn't have enough " + this.plugin.eco.currencyNamePlural() + " to keep your items, lol noob!");
+            String msg = this.plugin.getConfig().getString("message.death.no_money", "MISSING TEXT");
+            this.plugin.sendMessage(event.getPlayer(), Component.translatable(msg)
+                    .args(Component.text(this.plugin.eco.currencyNamePlural()), costText));
             return;
         }
 
@@ -32,8 +38,7 @@ public class PlayerDeathEvent implements Listener {
         event.setKeepLevel(true);
         event.setDroppedExp(0);
 
-        event.getPlayer().sendMessage("You've paid " +
-                cost + " " + (cost == 1? this.plugin.eco.currencyNameSingular():this.plugin.eco.currencyNamePlural()) +
-                " to keep your items and XP!");
+        String msg = this.plugin.getConfig().getString("message.death.paid", "MISSING TEXT");
+        this.plugin.sendMessage(event.getPlayer(), Component.translatable(msg).args(costText));
     }
 }

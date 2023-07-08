@@ -1,2 +1,14 @@
 # how expensive it is to keep their items after a death
 cost: 100
+
+# how messages should be displayed
+message:
+  enabled: "Enabled"
+  disabled: "Disabled"
+
+  reload: "Successfully reloaded config!"
+  setting.get: "Your KeepInv setting is currently %s."
+  setting.set: "Your KeepInv setting is now %s!"
+  setting.set_refuse: "Your KeepInv setting is already %s!"
+  death.no_money: "You didn't have enough %s to pay for your items. You need %s."
+  death.paid: "You paid %s to keep your items and XP!"
