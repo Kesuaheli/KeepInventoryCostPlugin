@@ -6,5 +6,24 @@ author: Kesuaheli
 
 commands:
   keepinventory:
-    usage: "/keepinventory get - view
-    /keepinventory set <true|false> - update"
+    description: Set to true if you want to pay to keep your items after death, otherwise you will lose them.
+    permission: de.kesuaheli.keepinventorycost.command.base
+    usage: |-
+      Usage:
+      /<command> get - view
+      /<command> set <true|false> - update
+  keepinventoryadmin:
+    description: KeepInventoryCost admin commands.
+    permission: de.kesuaheli.keepinventorycost.command.admin
+    usage: |-
+      Usage: /<command> reload - reload the config
+
+permissions:
+  de.kesuaheli.keepinventorycost.command.base:
+    description: Allows usage of the /keepinventory command
+    default: true
+  de.kesuaheli.keepinventorycost.command.admin:
+    description: Allows usage of the /keepinventoryadmin command
+    children:
+      de.kesuaheli.keepinventory.command.base: true
+    default: op

@@ -1,5 +1,7 @@
 package de.kesuaheli.keepinventorycost;
 
+import de.kesuaheli.keepinventorycost.commands.KeepInventoryAdminCommand;
+import de.kesuaheli.keepinventorycost.commands.KeepInventoryAdminTab;
 import de.kesuaheli.keepinventorycost.commands.KeepInventoryCommand;
 import de.kesuaheli.keepinventorycost.commands.KeepInventoryTab;
 import de.kesuaheli.keepinventorycost.events.PlayerDeathEvent;
@@ -35,6 +37,8 @@ public final class KeepInventoryCost extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerDeathEvent(this), this);
         Objects.requireNonNull(this.getCommand("keepinventory")).setExecutor(new KeepInventoryCommand(this));
         Objects.requireNonNull(this.getCommand("keepinventory")).setTabCompleter(new KeepInventoryTab());
+        Objects.requireNonNull(this.getCommand("keepinventoryadmin")).setExecutor(new KeepInventoryAdminCommand(this));
+        Objects.requireNonNull(this.getCommand("keepinventoryadmin")).setTabCompleter(new KeepInventoryAdminTab());
 
         this.logger.info("KeepInventoryCost enabled!");
     }
