@@ -10,6 +10,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,5 +73,19 @@ public final class KeepInventoryCost extends JavaPlugin {
 
     public void sendMessage(Audience receiver, Component component) {
         receiver.sendMessage(LOG_PREFIX.append(component));
+    }
+
+    public String getConfigString(String path) {
+        return getConfigString(path, path);
+    }
+    public String getConfigString(String path, String def) {
+        return this.getConfig().getString(path, def);
+    }
+
+    public Component configStringText(String path) {
+        return configStringText(path, path);
+    }
+    public Component configStringText(String path, String def) {
+        return MiniMessage.miniMessage().deserialize(getConfigString(path, def));
     }
 }
