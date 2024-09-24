@@ -24,10 +24,7 @@ public final class KeepInventoryCost extends JavaPlugin {
     public Economy eco;
     public final Logger logger = getLogger();
 
-    private final TextComponent LOG_PREFIX = Component.empty()
-            .append(Component.text("["))
-            .append(Component.text("KeepInv", NamedTextColor.DARK_PURPLE))
-            .append(Component.text("] "));
+    private final Component MSG_PREFIX = configStringText("message.prefix").appendSpace();
 
     public PlayersConfig pConf;
 
@@ -72,7 +69,7 @@ public final class KeepInventoryCost extends JavaPlugin {
     }
 
     public void sendMessage(Audience receiver, Component component) {
-        receiver.sendMessage(LOG_PREFIX.append(component));
+        receiver.sendMessage(MSG_PREFIX.append(component));
     }
 
     public String getConfigString(String path) {
