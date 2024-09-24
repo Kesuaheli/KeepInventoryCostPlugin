@@ -27,9 +27,11 @@ public class PlayerDeathEvent implements Listener {
         if (cost >= 0 &&
                 (this.plugin.eco.getBalance(event.getPlayer()) < cost ||
                 !this.plugin.eco.withdrawPlayer(event.getPlayer(), cost).transactionSuccess())) {
-            String msg = this.plugin.getConfig().getString("message.death.no_money", "MISSING TEXT");
+            String msg = this.plugin.getConfigString("message.death.no_money");
             this.plugin.sendMessage(event.getPlayer(), Component.translatable(msg)
-                    .args(Component.text(this.plugin.eco.currencyNamePlural()), costText));
+                    .args(Component.text(this.plugin.eco.currencyNamePlural()), costText)
+                    .toString()
+            );
             return;
         }
 
@@ -38,7 +40,7 @@ public class PlayerDeathEvent implements Listener {
         event.setKeepLevel(true);
         event.setDroppedExp(0);
 
-        String msg = this.plugin.getConfig().getString("message.death.paid", "MISSING TEXT");
-        this.plugin.sendMessage(event.getPlayer(), Component.translatable(msg).args(costText));
+        String msg = this.plugin.getConfigString("message.death.paid");
+        this.plugin.sendMessage(event.getPlayer(), Component.translatable(msg).args(costText).toString());
     }
 }

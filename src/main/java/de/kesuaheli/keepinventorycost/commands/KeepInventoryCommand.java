@@ -32,16 +32,16 @@ public class KeepInventoryCommand implements CommandExecutor {
 
         boolean enabled = this.plugin.pConf.getConfig().getBoolean(player.getUniqueId() + ".enabled", false);
         String msg;
-        TextComponent state;
+        String state;
 
         switch (arg[0]) {
         case "get":
             msg = this.plugin.getConfig().getString("message.setting.get", "MISSING TEXT");
             state = enabled ?
-                    Component.text(this.plugin.getConfig().getString("message.enabled", "TRUE"), NamedTextColor.GREEN):
-                    Component.text(this.plugin.getConfig().getString("message.disabled", "FALSE"), NamedTextColor.RED);
+                    this.plugin.getConfigString("message.enabled", "<green>TRUE"):
+                    this.plugin.getConfigString("message.disabled", "<red>FALSE");
 
-            this.plugin.sendMessage(sender, Component.translatable(msg).args(state));
+            this.plugin.sendMessage(sender, Component.translatable(msg).args(Component.text(state)).toString());
 
             return true;
         case "set":
@@ -51,17 +51,17 @@ public class KeepInventoryCommand implements CommandExecutor {
 
             boolean enable = arg[1].equals("true");
             state = enable ?
-                    Component.text(this.plugin.getConfig().getString("message.enabled", "TRUE"), NamedTextColor.GREEN):
-                    Component.text(this.plugin.getConfig().getString("message.disabled", "FALSE"), NamedTextColor.RED);
+                    this.plugin.getConfigString("message.enabled", "<green>TRUE"):
+                    this.plugin.getConfigString("message.disabled", "<red>FALSE");
 
             if (enable != enabled) {
                 this.plugin.pConf.getConfig().set(player.getUniqueId() + ".enabled", enable);
                 this.plugin.pConf.saveConfig();
-                msg = this.plugin.getConfig().getString("message.setting.set", "MISSING TEXT");
+                msg = this.plugin.getConfigString("message.setting.set");
             } else {
-                msg = this.plugin.getConfig().getString("message.setting.set_refuse", "MISSING TEXT");
+                msg = this.plugin.getConfigString("message.setting.set_refuse");
             }
-            this.plugin.sendMessage(player, Component.translatable(msg).args(state));
+            this.plugin.sendMessage(player, Component.translatable(msg).args(Component.text(state)).toString());
             return true;
         }
         return false;

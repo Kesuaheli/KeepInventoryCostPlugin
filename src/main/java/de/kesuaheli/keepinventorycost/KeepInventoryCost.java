@@ -39,6 +39,7 @@ public final class KeepInventoryCost extends JavaPlugin {
         }
 
         this.saveDefaultConfig();
+        this.reloadConfig();
         this.pConf = new PlayersConfig(this);
 
         this.getServer().getPluginManager().registerEvents(new PlayerDeathEvent(this), this);
@@ -65,7 +66,7 @@ public final class KeepInventoryCost extends JavaPlugin {
     }
 
     public void sendMessage(Audience receiver, String message) {
-        sendMessage(receiver, Component.text(message));
+        sendMessage(receiver, MiniMessage.miniMessage().deserialize(message));
     }
 
     public void sendMessage(Audience receiver, Component component) {

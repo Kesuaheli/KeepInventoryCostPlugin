@@ -4,8 +4,8 @@ cost: 100
 # how messages should be displayed
 message:
   prefix: "[<dark_purple>KeepInv<reset>]"
-  enabled: "Enabled"
-  disabled: "Disabled"
+  enabled: "<green>Enabled"
+  disabled: "<red>Disabled"
 
   reload: "Successfully reloaded config!"
   setting.get: "Your KeepInv setting is currently %s."
