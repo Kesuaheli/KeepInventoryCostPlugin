@@ -2,7 +2,6 @@ package de.kesuaheli.keepinventorycost.commands;
 
 import de.kesuaheli.keepinventorycost.KeepInventoryCost;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -8,8 +8,6 @@ import de.kesuaheli.keepinventorycost.events.PlayerDeathEvent;
 import de.kesuaheli.keepinventorycost.files.PlayersConfig;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
